@@ -1,0 +1,17 @@
+name: klutter_ui
+description: Flutter widgets to be used in conjunction with the klutter plugin.
+version: 0.1.0
+homepage: https://buijs.dev
+repository: https://github.com/buijs-dev/klutter-dart-ui
+
+environment:
+  sdk: ">=2.15.1 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  coverage: ^1.3.2
+  dartdoc: ^5.1.2
+  test: ^1.19.5
