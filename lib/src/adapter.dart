@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-/// Wrapper class for transfering response data from Platform to Flutter.
+/// Wrapper class for transferring response data from Platform to Flutter.
 ///
 /// Wraps an [exception] if calling the platform method has failed to be logged by the consumer.
 /// Or wraps an [object] of type T when platform method has returned a response and

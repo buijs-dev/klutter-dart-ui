@@ -15,7 +15,7 @@ jobs:
 
       # Get dependencies
       - name: Install dependencies
-        run: dart pub get
+        run: flutter pub get
 
       # Run all tests with coverage
       - name: Run tests with coverage

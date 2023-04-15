@@ -7,11 +7,13 @@ abstract class Subscriber<T> extends StatefulWidget {
   const Subscriber({
     required this.child,
     required this.channel,
+    required this.topic,
     Key? key,
   }) : super(key: key);
 
   final Widget Function(T?) child;
   final EventChannel channel;
+  final String topic;
 
   T decode(dynamic json);
 
@@ -25,7 +27,7 @@ class _SubscriberState<T> extends State<Subscriber<T>> {
 
   void _start() {
     _streamSubscription ??=
-        widget.channel.receiveBroadcastStream().listen(_update);
+        widget.channel.receiveBroadcastStream(widget.topic).listen(_update);
   }
 
   void _stop() {
@@ -36,7 +38,7 @@ class _SubscriberState<T> extends State<Subscriber<T>> {
   }
 
   void _update(dynamic data) {
-    setState(() => _data = widget.decode(data as String));
+    setState(() => _data = widget.decode(data));
   }
 
   @override
