@@ -1,3 +1,22 @@
+// Copyright (c) 2021 - 2023 Buijs Software
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
 import "dart:async";
 
 import "package:flutter/services.dart";
@@ -5,25 +24,80 @@ import "package:flutter/widgets.dart";
 
 import "adapter.dart";
 
+/// Send an event to Android/iOS platform and wait for a response [AdapterResponse].
+///
+/// Example implementation:
+///
+/// ```dart
+/// const MethodChannel _channel =
+///     MethodChannel('foo.bar.plugin/channel/my_simple_controller');
+///
+/// void foo({
+///   State? state,
+///   void Function(String)? onSuccess,
+///   void Function(Exception)? onFailure,
+/// }) =>
+///     doEvent<String>(
+///       state: state,
+///       event: "foo",
+///       channel: _channel,
+///       onSuccess: onSuccess,
+///       onFailure: onFailure,
+///     );
+/// ```
 Future<AdapterResponse<OUT>> doEvent<OUT>({
+  /// Name of the event.
+  ///
+  /// This name is used on the platform-side to determine which method to invoke.
   required String event,
+
+  /// MethodChannel where the event is to be published.
   required MethodChannel channel,
+
+  /// (Optional) Data to be send with the event.
+  ///
+  /// E.g. if the method to be invoked requires parameters then add them as message.
   dynamic message,
+
+  /// (Optional) State of widget from where the event is send.
+  ///
+  /// Used to determine if the state is mounted.
+  /// If not then callbacks are not executed.
   State? state,
+
+  /// (Optional) Decoding function used to decode the received response.
   OUT Function(String)? decode,
+
+  /// (Optional) Encoding function used to encode message if is not
+  /// a StandardMessageCodec Type.
   String Function(dynamic)? encode,
+
+  /// (Optional) Function to be executed if the event is processed successfully.
   void Function(OUT)? onSuccess,
+
+  /// (Optional) Function to be executed if the event is processed unsuccessfully.
   void Function(Exception)? onFailure,
+
+  /// (Optional) Function to be executed if the received response data is null.
   void Function()? onNullValue,
+
+  /// (Optional) Function to be executed when the event is processed, regardless success (or NOT).
   void Function(AdapterResponse<OUT>)? onComplete,
 }) async {
+  /// Create a request message.
+  ///
+  /// If [message] is null then [request] is also null.
   final dynamic request = _toRequestMessage(message, encode);
 
+  /// Send the event and wait for a response.
   final response = await _sendEvent(
     sendRequest: () => channel.invokeMethod<dynamic>(event, request),
     deserialize: decode,
   );
 
+  /// Check if state is mounted.
+  ///
+  /// if not then skip all callbacks and return the response.
   if (state?.mounted ?? true) {
     onComplete?.call(response);
     if (response.isSuccess) {

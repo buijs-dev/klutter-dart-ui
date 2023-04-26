@@ -1,7 +1,7 @@
 [![](https://img.shields.io/badge/Buijs-Software-blue)](https://pub.dev/publishers/buijs.dev/packages)
 [![GitHub license](https://img.shields.io/github/license/buijs-dev/klutter-dart?color=black&logoColor=black)](https://github.com/buijs-dev/klutter-dart/blob/main/LICENSE)
 [![pub](https://img.shields.io/pub/v/klutter-ui)](https://pub.dev/packages/klutter-ui)
-[![codecov](https://img.shields.io/codecov/c/github/buijs-dev/klutter-dart-ui?logo=codecov)](https://codecov.io/gh/buijs-dev/klutter-dart-ui)
+[![codecov](https://codecov.io/gh/buijs-dev/klutter-dart-ui/branch/main/graph/badge.svg?token=z0HCTKNLn5)](https://codecov.io/gh/buijs-dev/klutter-dart-ui)
 [![CodeScene Code Health](https://codescene.io/projects/38075/status-badges/code-health)](https://codescene.io/projects/38075)
 
 <img src="https://github.com/buijs-dev/klutter/blob/develop/.github/assets/metadata/icon/klutter_logo.png?raw=true" alt="buijs software logo" />
