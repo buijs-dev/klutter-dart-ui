@@ -1,6 +1,6 @@
 [![](https://img.shields.io/badge/Buijs-Software-blue)](https://pub.dev/publishers/buijs.dev/packages)
-[![GitHub license](https://img.shields.io/github/license/buijs-dev/klutter-dart?color=black&logoColor=black)](https://github.com/buijs-dev/klutter-dart/blob/main/LICENSE)
-[![pub](https://img.shields.io/pub/v/klutter-ui)](https://pub.dev/packages/klutter-ui)
+[![GitHub license](https://img.shields.io/github/license/buijs-dev/klutter-dart-ui?color=black&logoColor=black)](https://github.com/buijs-dev/klutter-dart-ui/blob/main/LICENSE)
+[![pub](https://img.shields.io/pub/v/klutter_ui)](https://pub.dev/packages/klutter_ui)
 [![codecov](https://codecov.io/gh/buijs-dev/klutter-dart-ui/branch/main/graph/badge.svg?token=z0HCTKNLn5)](https://codecov.io/gh/buijs-dev/klutter-dart-ui)
 [![CodeScene Code Health](https://codescene.io/projects/38075/status-badges/code-health)](https://codescene.io/projects/38075)
 
@@ -8,8 +8,8 @@
 
 Flutter Widgets to be used in conjunction with the [klutter plugin](https://github.com/buijs-dev/klutter-dart).
 Full support for:
-- [MethodChannel (synchronous)](#MethodChannel)
-- [EventChannel (asynchronous)](#EventChannel)
+- [MethodChannel](#MethodChannel)
+- [EventChannel](#EventChannel)
 
 ## MethodChannel
 Example function which invokes method foo on the given channel and returns a String value.
