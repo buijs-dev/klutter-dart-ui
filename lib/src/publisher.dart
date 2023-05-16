@@ -99,12 +99,12 @@ Future<AdapterResponse<OUT>> doEvent<OUT>({
   ///
   /// if not then skip all callbacks and return the response.
   if (state?.mounted ?? true) {
-    onComplete?.call(response);
     if (response.isSuccess) {
       onSuccess?.call(response.object);
     } else {
       onFailure?.call(response.exception);
     }
+    onComplete?.call(response);
   }
 
   return response;
