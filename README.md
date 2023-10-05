@@ -57,10 +57,10 @@ const _stream = EventChannel('foo.bar.plugin/channel/counter');
 
 class Counter extends Subscriber<int> {
     const Counter({
-      required Widget Function(int?) child,
+      required Widget Function(int?) builder,
       Key? key,
     }) : super(
-      child: child,
+      builder: builder,
       channel: _stream,
       topic: "counter",
       key: key,
@@ -74,5 +74,5 @@ class Counter extends Subscriber<int> {
 All that is required to use the returned data is to wrap any widget with the Counter widget and then use it's value.
 
 ```dart
-Counter(child: (res) => Text("$res")),
+Counter(builder: (res) => Text("$res")),
 ```
