@@ -32,10 +32,10 @@ import "package:flutter/widgets.dart";
 ///
 /// class Counter extends Subscriber<int> {
 ///     const Counter({
-///       required Widget Function(int?) child,
+///       required Widget Function(int?) builder,
 ///       Key? key,
 ///     }) : super(
-///       child: child,
+///       builder: builder,
 ///       channel: _stream,
 ///       topic: "counter",
 ///       key: key,
@@ -48,14 +48,14 @@ import "package:flutter/widgets.dart";
 abstract class Subscriber<T> extends StatefulWidget {
   /// Construct a new instance.
   const Subscriber({
-    required this.child,
+    required this.builder,
     required this.channel,
     required this.topic,
     Key? key,
   }) : super(key: key);
 
   /// Any widget which wants access to the [T] data stream.
-  final Widget Function(T?) child;
+  final Widget Function(T?) builder;
 
   /// Channel on which to subscribe.
   final EventChannel channel;
@@ -114,6 +114,6 @@ class _SubscriberState<T> extends State<Subscriber<T>> {
 
   @override
   Widget build(BuildContext context) {
-    return widget.child.call(_data);
+    return widget.builder.call(_data);
   }
 }
