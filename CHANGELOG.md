@@ -1,3 +1,6 @@
+## 1.0.1
+* Bump SDK constraints to >=2.18.0 <4.0.0.
+
 ## 1.0.0
 * Renamed child to builder: ([ticket](https://github.com/buijs-dev/klutter/issues/20))
 
