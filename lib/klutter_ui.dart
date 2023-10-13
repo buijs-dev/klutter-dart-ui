@@ -18,6 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+/// Flutter widgets to be used in conjunction with the klutter plugin.
 library klutter_ui;
 
 export "src/adapter.dart";
