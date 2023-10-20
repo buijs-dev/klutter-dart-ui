@@ -1,5 +1,4 @@
 [![](https://img.shields.io/badge/Buijs-Software-blue)](https://pub.dev/publishers/buijs.dev/packages)
-
 [![GitHub license](https://img.shields.io/github/license/buijs-dev/klutter-dart-ui?color=black&logoColor=black)](https://github.com/buijs-dev/klutter-dart-ui/blob/main/LICENSE)
 [![pub](https://img.shields.io/pub/v/klutter_ui)](https://pub.dev/packages/klutter_ui)
 [![codecov](https://codecov.io/gh/buijs-dev/klutter-dart-ui/branch/main/graph/badge.svg?token=z0HCTKNLn5)](https://codecov.io/gh/buijs-dev/klutter-dart-ui)
