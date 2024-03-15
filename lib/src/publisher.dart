@@ -65,12 +65,19 @@ Future<AdapterResponse<OUT>> doEvent<OUT>({
   /// If not then callbacks are not executed.
   State? state,
 
-  /// (Optional) Decoding function used to decode the received response.
+  /// (Optional) Decoding function used to decode the received JSON response.
   OUT Function(String)? decode,
 
   /// (Optional) Encoding function used to encode message if is not
   /// a StandardMessageCodec Type.
   String Function(dynamic)? encode,
+
+  /// (Optional) Decoding function used to decode the received buffer response.
+  OUT Function(List<int>)? decodeBuffer,
+
+  /// (Optional) Encoding function used to encode message as buffer if is not
+  /// a StandardMessageCodec Type.
+  Uint8List Function(dynamic)? encodeBuffer,
 
   /// (Optional) Function to be executed if the event is processed successfully.
   void Function(OUT)? onSuccess,
@@ -87,12 +94,13 @@ Future<AdapterResponse<OUT>> doEvent<OUT>({
   /// Create a request message.
   ///
   /// If [message] is null then [request] is also null.
-  final dynamic request = _toRequestMessage(message, encode);
+  final dynamic request = _toRequestMessage(message, encode, encodeBuffer);
 
   /// Send the event and wait for a response.
   final response = await _sendEvent(
     sendRequest: () => channel.invokeMethod<dynamic>(event, request),
-    deserialize: decode,
+    decode: decode,
+    decodeBuffer: decodeBuffer
   );
 
   /// Check if state is mounted.
@@ -112,12 +120,14 @@ Future<AdapterResponse<OUT>> doEvent<OUT>({
 
 Future<AdapterResponse<OUT>> _sendEvent<OUT>({
   required dynamic Function() sendRequest,
-  OUT Function(String)? deserialize,
+  OUT Function(String)? decode,
+  OUT Function(List<int>)? decodeBuffer,
 }) async {
   try {
     final dynamic responseMessage = _handleResult(
       response: await sendRequest.call(),
-      deserialize: deserialize,
+      decode: decode,
+      decodeBuffer: decodeBuffer,
     );
 
     return AdapterResponse<OUT>.success(responseMessage as OUT);
@@ -130,22 +140,35 @@ Exception _failureToException(dynamic e) =>
     e is Error ? Exception(e.stackTrace) : e as Exception;
 
 dynamic _toRequestMessage(
-  dynamic message,
-  String Function(dynamic)? encode,
+    dynamic message,
+    String Function(dynamic)? encode,
+    Uint8List Function(dynamic)? encodeBuffer,
 ) {
   if (message == null) {
     return null;
   }
 
-  if (encode == null) {
-    return message;
+  if(encodeBuffer != null) {
+    return encodeBuffer(message);
   }
 
-  return encode.call(message);
+  if (encode != null) {
+    return encode(message);
+  }
+
+  return message;
 }
 
 dynamic _handleResult<OUT>({
   dynamic response,
-  OUT Function(String)? deserialize,
-}) =>
-    deserialize?.call(response.toString()) ?? response;
+  OUT Function(String)? decode,
+  OUT Function(List<int>)? decodeBuffer,
+}) {
+  if (response == null) {
+    return response;
+  }
+  return decodeBuffer?.call(response as List<int>)
+      ?? decode?.call(response.toString())
+      ?? response;
+
+}

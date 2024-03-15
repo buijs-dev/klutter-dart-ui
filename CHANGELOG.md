@@ -1,3 +1,6 @@
+## 1.1.0
+* Add support for protocol buffers through encodeBuffer and decodeBuffer fields in doEvent method.
+
 ## 1.0.1
 * Bump SDK constraints to >=2.17.6 <4.0.0
 
