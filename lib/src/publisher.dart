@@ -98,10 +98,9 @@ Future<AdapterResponse<OUT>> doEvent<OUT>({
 
   /// Send the event and wait for a response.
   final response = await _sendEvent(
-    sendRequest: () => channel.invokeMethod<dynamic>(event, request),
-    decode: decode,
-    decodeBuffer: decodeBuffer
-  );
+      sendRequest: () => channel.invokeMethod<dynamic>(event, request),
+      decode: decode,
+      decodeBuffer: decodeBuffer);
 
   /// Check if state is mounted.
   ///
@@ -140,15 +139,15 @@ Exception _failureToException(dynamic e) =>
     e is Error ? Exception(e.stackTrace) : e as Exception;
 
 dynamic _toRequestMessage(
-    dynamic message,
-    String Function(dynamic)? encode,
-    Uint8List Function(dynamic)? encodeBuffer,
+  dynamic message,
+  String Function(dynamic)? encode,
+  Uint8List Function(dynamic)? encodeBuffer,
 ) {
   if (message == null) {
     return null;
   }
 
-  if(encodeBuffer != null) {
+  if (encodeBuffer != null) {
     return encodeBuffer(message);
   }
 
@@ -167,8 +166,7 @@ dynamic _handleResult<OUT>({
   if (response == null) {
     return response;
   }
-  return decodeBuffer?.call(response as List<int>)
-      ?? decode?.call(response.toString())
-      ?? response;
-
+  return decodeBuffer?.call(response as List<int>) ??
+      decode?.call(response.toString()) ??
+      response;
 }
